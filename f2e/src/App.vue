@@ -1,7 +1,7 @@
-<script setup>
+<!-- <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
-</script>
+</script> -->
 
 <template>
   <header>
@@ -9,16 +9,42 @@ import HelloWorld from './components/HelloWorld.vue'
       <!-- <HelloWorld msg="You did it!" /> -->
       <nav class="flex items-center gap-16px py-20px">
         <RouterLink to="/" class="text-gray-2 hover:text-green-900 active:text-gray-1">首頁</RouterLink>
-        <RouterLink to="/about" class="text-gray-2 hover:text-green-900 active:text-gray-1">關於網站</RouterLink>
+        <RouterLink to="/about"  class="text-gray-2 hover:text-green-900 active:text-gray-1">關於網站</RouterLink>
         <RouterLink to="/login" class="text-gray-2 hover:text-green-900 active:text-gray-1">讀者登入</RouterLink>
       </nav>
 
     </div>
   </header>
 
-  <RouterView />
+  <RouterView :isAdmin="isAdmin" />
 </template>
 
+<script>
+import { RouterLink, RouterView } from 'vue-router'
+import { useAuthStore } from './stores';
+export default {
+  name: 'App',
+  computed: {
+    isAdmin() {
+      return useAuthStore().isAdmin;
+    }, //  回傳目前isAdmin 布林
+  },
+  beforeRouteEnter(to, from, next) {
+    // 權限檢查
+    if (to.matched.some((record) => record.meta.requiresAdmin)) {
+      const isAdmin = useAuthStore().isAdmin;
+      if (isAdmin) {
+        // alert('你登入了！')
+        next();
+      } else {
+        // next('/'); // 未登入，導向到其他頁
+      }
+    } else {
+      next();
+    }
+  },
+};
+</script>
 <style scoped>
 /* header {
   line-height: 1.5;
