@@ -6,11 +6,13 @@ import HelloWorld from './components/HelloWorld.vue'
 <template>
   <header>
     <div class="container">
-      <!-- <HelloWorld msg="You did it!" /> -->
-      <nav class="flex items-center gap-16px py-20px">
+      <nav class="flex items-center gap-16px py-20px justify-end">
         <RouterLink to="/" class="text-gray-2 hover:text-green-900 active:text-gray-1">首頁</RouterLink>
         <RouterLink to="/about"  class="text-gray-2 hover:text-green-900 active:text-gray-1">關於網站</RouterLink>
-        <RouterLink to="/login" class="text-gray-2 hover:text-green-900 active:text-gray-1">讀者登入</RouterLink>
+        <template v-if="isAdmin">
+          <button type="submit" v-on:click="logout()" class="text-white py-8px px-16px bg-gray-1 rounded-2xl block my-20px">登出</button>
+        </template>
+        <RouterLink v-else to="/login" class="text-gray-2 hover:text-green-900 active:text-gray-1">會員登入</RouterLink>
       </nav>
 
     </div>
@@ -29,18 +31,24 @@ export default {
       return useAuthStore().isAdmin;
     }, //  回傳目前isAdmin 布林
   },
-  beforeRouteEnter(to, from, next) {
-    // 權限檢查
-    if (to.matched.some((record) => record.meta.requiresAdmin)) {
-      const isAdmin = useAuthStore().isAdmin;
-      if (isAdmin) {
-        // alert('你登入了！')
-        next();
-      } else {
-        // next('/'); // 未登入，導向到其他頁
-      }
-    } else {
-      next();
+  // beforeRouteEnter(to, from, next) {
+  //   // 權限檢查
+  //   if (to.matched.some((record) => record.meta.requiresAdmin)) {
+  //     const isAdmin = useAuthStore().isAdmin;
+  //     if (isAdmin) {
+  //       // alert('你登入了！')
+  //       next();
+  //     } else {
+  //       next('/login'); // 未登入，導向到其他頁
+  //     }
+  //   } else {
+  //     next();
+  //   }
+  // },
+  methods: {
+    logout() {
+      useAuthStore().setAdmin(false);
+      alert('你已登出!');
     }
   },
 };
