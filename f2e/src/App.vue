@@ -5,16 +5,23 @@ import HelloWorld from './components/HelloWorld.vue'
 
 <template>
   <header>
-    <div class="container">
-      <nav class="flex items-center gap-16px py-20px justify-end">
-        <RouterLink to="/" class="text-gray-2 hover:text-green-900 active:text-gray-1">首頁</RouterLink>
-        <RouterLink to="/about"  class="text-gray-2 hover:text-green-900 active:text-gray-1">關於網站</RouterLink>
+    <div class="container py-20px flex justify-between items-center">
+      <!-- HEADER 左邊 -->
+      <div class="logo">
+        <RouterLink to="/">
+          <img src="#" alt="" width="120" height="30">
+        </RouterLink>
+      </div>  
+       <!-- HEADER 右邊 -->
+      <nav class="flex items-center gap-16px justify-end">
+        <RouterLink to="/about" class="text-gray-2 hover:text-gray-3 active:text-gray-2">網站導覽</RouterLink>
         <template v-if="isAdmin">
-          <button type="submit" v-on:click="logout()" class="text-white py-8px px-16px bg-gray-1 rounded-2xl block my-20px">登出</button>
+          <Button text="會員專區" class="bg-gray-2" type="submit" v-on:click="logout()"></Button>
         </template>
-        <RouterLink v-else to="/login" class="text-gray-2 hover:text-green-900 active:text-gray-1">會員登入</RouterLink>
+        <RouterLink v-else to="/login" class="text-gray-2 hover:text-green-900 active:text-gray-1">
+          <Button text="登入"></Button>
+        </RouterLink>
       </nav>
-
     </div>
   </header>
 
@@ -24,8 +31,12 @@ import HelloWorld from './components/HelloWorld.vue'
 <script>
 import { RouterLink, RouterView } from 'vue-router'
 import { useAuthStore } from './stores';
+import Button from './components/Button.vue'
 export default {
   name: 'App',
+  components: {
+    'Button': Button
+  },
   computed: {
     isAdmin() {
       return useAuthStore().isAdmin;
@@ -53,62 +64,8 @@ export default {
   },
 };
 </script>
-<style scoped>
-/* header {
-  line-height: 1.5;
-  max-height: 100vh;
-} */
-/* nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-*/
-
+<style scoped lang="postcss">
 nav a.router-link-exact-active {
-  @apply text-gray-1 font-medium;
+  @apply font-medium;
 }
-
-/*
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-} */
-
-/* @media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  } 
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-} */
 </style>

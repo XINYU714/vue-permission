@@ -1,5 +1,4 @@
 <script setup>
-import TheWelcome from '../components/TheWelcome.vue'
 import CardItem from '../components/CardItem.vue';
 
 </script>
@@ -14,7 +13,6 @@ import CardItem from '../components/CardItem.vue';
         <img src="https://picsum.photos/200/300" alt="">
       </div> 
     </div>
-    <TheWelcome />
     <CardItem />
     </div>
 

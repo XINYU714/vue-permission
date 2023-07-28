@@ -23,8 +23,11 @@ const colors = {
   'gray-2': '#526D82',
   'gray-3': '#9DB2BF',
   'gray-4': '#DDE6ED',
+  'green-1': '#6B9080',
+  'green-2': '#A4C3B2',
+  'green-3': '#CCE3DE',
+  'green-4': '#F6FFF8',
   'red': '#FF6666',
-
 }
 module.exports = {
   content: ['./src/**/*.{vue,js,jsx}', './index.html'],
@@ -35,7 +38,6 @@ module.exports = {
         DEFAULT: '20px',
         md:'40px',
         lg:'60px',
-        
       },
       screens:screens
     },
